@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12090d">
+  <meta name="description" content="চারটা ছোট গল্প, একটা ছোট্ট ভালোবাসা।">
+
+  <title>একটা ছোট্ট বক্স 💝</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+    :root {
+      --bg: #10090c;
+      --bg2: #1b0d12;
+      --card: rgba(255,255,255,.055);
+      --border: rgba(255,190,205,.13);
+      --text: #fff4f6;
+      --muted: #c9adb5;
+      --pink: #ff7f9f;
+      --pink2: #ffb2c5;
+      --shadow: 0 20px 70px rgba(0,0,0,.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,75,120,.14), transparent 35%),
+        radial-gradient(circle at 0% 70%, rgba(255,120,150,.07), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Hind Siliguri", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ---------- floating hearts ---------- */
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -30px;
+      color: rgba(255,130,160,.18);
+      font-size: 15px;
+      animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% { opacity: 1; }
+      to {
+        transform: translateY(-110vh) rotate(35deg);
+        opacity: 0;
+      }
+    }
+
+    /* ---------- intro ---------- */
+
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      max-width: 700px;
+      animation: heroIn 1.2s ease both;
+    }
+
+    @keyframes heroIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tiny {
+      color: var(--pink2);
+      font-size: .8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-heart {
+      font-size: 58px;
+      display: inline-block;
+      margin-bottom: 18px;
+      filter: drop-shadow(0 0 22px rgba(255,100,140,.35));
+      animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      10% { transform: scale(1.12); }
+      20% { transform: scale(1); }
+      30% { transform: scale(1.08); }
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.4rem, 9vw, 5.3rem);
+      line-height: 1.05;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      max-width: 540px;
+      margin: auto;
+    }
+
+    .scroll {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 35px;
+      color: var(--pink2);
+      text-decoration: none;
+      font-size: .9rem;
+      border: 1px solid var(--border);
+      padding: 11px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.025);
+      transition: .25s;
+    }
+
+    .scroll:hover {
+      background: rgba(255,130,160,.1);
+      transform: translateY(-2px);
+    }
+
+    /* ---------- stories ---------- */
+
+    main {
+      width: min(920px, calc(100% - 30px));
+      margin: auto;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 100px;
+    }
+
+    .story {
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .story.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .story-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: clamp(24px, 6vw, 44px);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .story-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,100,140,.08);
+      filter: blur(20px);
+      top: -100px;
+      right: -70px;
+    }
+
+    .number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255,150,175,.22);
+      color: var(--pink2);
+      font-size: .85rem;
+      margin-bottom: 22px;
+    }
+
+    .story-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.6rem, 5vw, 2.3rem);
+      margin-bottom: 18px;
+    }
+
+    .story-text {
+      color: #e7d4d9;
+      font-size: 1.03rem;
+      line-height: 2;
+      white-space: pre-line;
+    }
+
+    .highlight {
+      color: var(--pink2);
+      font-weight: 600;
+    }
+
+    .mini-heart {
+      display: block;
+      margin-top: 25px;
+      font-size: 18px;
+      opacity: .8;
+    }
+
+    /* ---------- jealousy list ---------- */
+
+    .reasons {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .reason {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 15px 16px;
+      border-radius: 17px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .reason-number {
+      min-width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,110,145,.12);
+      color: var(--pink2);
+      font-size: .8rem;
+    }
+
+    .reason strong {
+      display: block;
+      color: #fff0f3;
+      margin-bottom: 3px;
+    }
+
+    .reason span {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    /* ---------- ending ---------- */
+
+    .ending {
+      text-align: center;
+      padding: 80px 20px 20px;
+    }
+
+    .ending .big {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 7vw, 4rem);
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+
+    .ending p {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .final-heart {
+      margin-top: 28px;
+      font-size: 38px;
+      display: inline-block;
+      cursor: pointer;
+      transition: transform .25s;
+    }
+
+    .final-heart:hover {
+      transform: scale(1.25) rotate(-8deg);
+    }
+
+    footer {
+      text-align: center;
+      color: #765b64;
+      font-size: .78rem;
+      padding: 25px 15px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---------- mobile ---------- */
+
+    @media (max-width: 600px) {
+      .hero {
+        min-height: 92svh;
+      }
+
+      .hero p {
+        font-size: .97rem;
+      }
+
+      .story-card {
+        border-radius: 22px;
+      }
+
+      .story-text {
+        font-size: .98rem;
+        line-height: 1.9;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hearts" id="hearts"></div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="tiny">just a small story</div>
+
+      <div class="hero-heart">💝</div>
+
+      <h1>একটা ছোট্ট বক্স,<br>চারটা গল্প।</h1>
+
+      <p>
+        কিছু কথা মুখে বলা হয় না।
+        কিছু কথা একটা ছোট্ট বক্সে রেখে দেওয়া যায়—
+        যেন সময় পেরিয়ে গেলেও অনুভূতিটা থেকে যায়।
+      </p>
+
+      <a href="#stories" class="scroll">
+        গল্পগুলো পড়ো ↓
+      </a>
+    </div>
+  </header>
+
+
+  <!-- STORIES -->
+  <main id="stories">
+
+    <!-- STORY 1 -->
+    <section class="story">
+      <article class="story-card">
+        <div class="number">01</div>
+
+        <h2 class="story-title">বক্সের কাহিনী 💝</h2>
+
+        <p class="story-text">শুরু করি বক্সের কাহিনী দিয়েই।
+
+যেইটা একদিন বলতে চাইলাম কিন্তু পড়া আর শুনলাই না।
+
+আমার তো <span class="highlight">চুরি পছন্দই হয় না</span>, শেষ আশা নিয়ে গেলাম মিরপুর এর সব চেয়ে বড় চুরির দোকানে।
+
+দোকানে যাইয়া দেখি চুরির জন্য ফুল আলাদা অ্যাপার্টমেন্ট ই নেয়া—তাও ফুল AC!
+
+I was like — <span class="highlight">এ চুরির ও এত বড়ো দোকান হয় 😑পরে আবার আমারে বলতাছে চুরিরও নাকি সাইজ আছে,  আমি পুরা আকাশ থেকে পরছি 🥲 </span>
+
+তারপরে আবার চুরি খোঁজা শুরু করলাম, কিন্তু আমার পছন্দই হইলো না।
+
+আমি জানি না যেই কালার চুরি কিনসি ওইটা ভালো দেখে যায় কিনা, অথবা কম ধামি দেখা যায় কিনা 😑
+
+খালি এইটা সিওর থাকো—
+<span class="highlight">আমার জাস্ট ওই চুরি টাই পছন্দ হয়েছিল।</span>
+
+চুরি পছন্দ না হইলে মন খারাপ কইরো না, সামনে দিন আরও আছেই।
+
+লেখাটা লিখতাসি সকাল বেলা। যদি এই টাইমে একটা Kinder Joy খুঁইজা পায় তাইলে বক্স কমপ্লিট হয়তো।
+
+কিন্তু ঢাকা থেকে খুব তাড়াহুড়া করে আইসা পড়ায় Kinder Joy টা ঢাকা থেকে কিনতে পারলাম না।
+
+আর সকাল বেলা ফুল খুইজা পাইলে ফুল দিমুনি।
+
+ফুল না দিতে পারলে মনে কইরো—
+<span class="highlight">সকাল বেলা ফুল খুইজা পাই নাই। 🌸</span></p>
+
+        <span class="mini-heart">💝</span>
+      </article>
+    </section>
+
+
+    <!-- STORY 2 -->
+    <section class="story">
+      <article class="story-card">
+        <div class="number">02</div>
+
+        <h2 class="story-title">শুধু তোমাকে দেখার জন্য</h2>
+
+        <p class="story-text">আমি জানি না আমারে দেখার পরে তুমি অবাক হবা নাকি খুশি হবা নাকি বিরক্ত হবা 😐
+
+আমি জাস্ট তোমারে দেখার জন্য একটা <span class="highlight">রিস্ক নিয়া আইসা পড়সি</span>,
+
+কারন এক্সাম এখোনো একটা বাদ আসে।</p>
+
+        <span class="mini-heart">"জাস্ট তোমারে দেখার জন্য।" 🤍</span>
+      </article>
+    </section>
+
+
+    <!-- STORY 3 -->
+    <section class="story">
+      <article class="story-card">
+        <div class="number">03</div>
+
+        <h2 class="story-title">হয় তুমি, না হইলে কেউ না।</h2>
+
+        <p class="story-text">এখন নতুন করে আর কেমনে ভালোবাসা প্রকাশ করমু?
+
+আজকে একটা কথা বলি—
+
+<span class="highlight">হয় তুমি,
+না হইলে কেউ না।</span></p>
+
+        <span class="mini-heart">♡</span>
+      </article>
+    </section>
+
+
+    <!-- STORY 4 -->
+    <section class="story">
+      <article class="story-card">
+        <div class="number">04</div>
+
+        <h2 class="story-title">রাগের পেছনের গল্প</h2>
+
+        <p class="story-text">যদি মনে হয় ইদানিং আমি বেশি রাগারাগি করি তাহলে মনে রাখবা—
+
+<span class="highlight">১ দিন এর বেশি রাগ যাব না আমার।</span>
+
+আর রাগ করার মেইন ৩ টা কারণ হইলো—</p>
+
+        <div class="reasons">
+
+          <div class="reason">
+            <div class="reason-number">১</div>
+            <div>
+              <strong>Jealousy</strong>
+              <span>তুমি খালি আমার কথা শেষ।</span>
+            </div>
+          </div>
+
+          <div class="reason">
+            <div class="reason-number">২</div>
+            <div>
+              <strong>Possessiveness</strong>
+              <span>কিছু মানুষকে একটু বেশি নিজের মনে হয়।</span>
+            </div>
+          </div>
+
+          <div class="reason">
+            <div class="reason-number">৩</div>
+            <div>
+              <strong>পর্দা</strong>
+              <span>এক কথায়—আমি চাই তোমারে যেন কেউ বদ নজর না দেয়।</span>
+            </div>
+          </div>
+
+        </div>
+
+        <span class="mini-heart">তোমার জন্যই একটু বেশি care করি। ❤️</span>
+      </article>
+    </section>
+
+
+    <!-- END -->
+    <section class="ending">
+      <div class="big">
+        শেষ কথা?<br>
+        <span class="highlight">হয় তুমি, না হইলে কেউ না।</span>
+      </div>
+
+      <p>
+        এইটুকুই ছিল বক্সের গল্প।<br>
+        খুব বড় কিছু না—জাস্ট কিছু ছোট ছোট অনুভূতি। 💝
+      </p>
+
+      <div class="final-heart" id="finalHeart">💗</div>
+    </section>
+
+  </main>
+
+  <footer>
+    Made with a little bit of courage & a lot of feelings.
+  </footer>
+
+
+  <script>
+    /* ---------- reveal stories on scroll ---------- */
+
+    const stories = document.querySelectorAll(".story");
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    stories.forEach(story => observer.observe(story));
+
+
+    /* ---------- lightweight floating hearts ---------- */
+
+    const heartContainer = document.getElementById("hearts");
+
+    function createHeart() {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent = Math.random() > .35 ? "♡" : "♥";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (10 + Math.random() * 14) + "px";
+      heart.style.animationDuration = (7 + Math.random() * 7) + "s";
+
+      heartContainer.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 15000);
+    }
+
+    setInterval(createHeart, 1200);
+
+
+    /* ---------- final heart interaction ---------- */
+
+    const finalHeart = document.getElementById("finalHeart");
+
+    finalHeart.addEventListener("click", () => {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => createHeart(), i * 70);
+      }
+
+      finalHeart.textContent = "💖";
+      setTimeout(() => {
+        finalHeart.textContent = "💗";
+      }, 900);
+    });
+  </script>
+
+</body>
+  </html>
